@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convite Especial 💖</title>
+<title>Cinema Caseiro — Taylor’s Version 💖</title>
 
 <style>
   body {
@@ -14,21 +14,32 @@
     overflow-x: hidden;
   }
 
-  .hidden {
-    display: none;
+  .hidden { display: none; }
+
+  .card {
+    background: white;
+    max-width: 500px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: fade 0.4s ease;
   }
 
   button {
-    padding: 12px 22px;
+    padding: 14px 24px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
     margin: 10px;
   }
 
-  #fugir {
-    position: absolute;
+  #fugir { position: absolute; }
+
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 </head>
@@ -36,119 +47,178 @@
 <body>
 
 <!-- FASE 1 -->
-<div id="fase1">
-  <h1>🎮 Fase 1</h1>
-  <p>Preparada para desbloquear um convite?</p>
-  <button onclick="startMusic(); next('fase1','fase2')">Começar</button>
+<div id="fase1" class="card">
+  <h1>🎮 Fase 1 — Ready For It?</h1>
+  <p>Esse jogo decide se você merece um cinema caseiro premium.</p>
+  <button onclick="next('fase1','fase2')">Começar o caos</button>
 </div>
 
-<!-- FASE 2 – PIPOCA -->
-<div id="fase2" class="hidden">
-  <h1>🍿 Fase 2</h1>
-  <p>Pipoca carregando...</p>
-  <p id="pipoca">0%</p>
-  <button onclick="pipoca()">Estourar pipoca</button>
+<!-- FASE 2 — PIPOCA -->
+<div id="fase2" class="card hidden">
+  <h1>🍿 Fase 2 — Pipoca em risco</h1>
+  <p>A pipoca só estoura se você clicar no ritmo certo.</p>
+  <p id="pipoca">🍿🍿🍿🍿🍿</p>
+  <p id="pipocaTexto">Status: fria e decepcionante</p>
+  <button onclick="pipoca()">ESTOURAR 🍿</button>
 </div>
 
-<!-- FASE 3 – SOFÁ -->
-<div id="fase3" class="hidden">
-  <h1>🛋️ Fase 3</h1>
-  <p>Teste oficial de conforto do sofá</p>
-  <p id="sofa">Cliques: 0/5</p>
-  <button onclick="sofa()">Sentar no sofá</button>
+<!-- FASE 3 — SOFÁ -->
+<div id="fase3" class="card hidden">
+  <h1>🛋️ Fase 3 — Teste do sofá</h1>
+  <p>Esse sofá precisa de aprovação emocional.</p>
+  <p id="sofa">Nível de conforto: 0%</p>
+  <button onclick="sofa()">Afofar o sofá</button>
 </div>
 
-<!-- FASE 4 – QUIZ -->
-<div id="fase4" class="hidden">
-  <h1>🎶 Fase 4 – Quiz Taylor Swift</h1>
-  <p>Complete: <br> “It’s a love ____”</p>
-  <button onclick="quiz(false)">Story ❌</button>
-  <button onclick="quiz(true)">Love Story ✅</button>
+<!-- FASE 4 — QUIZ TAYLOR -->
+<div id="fase4" class="card hidden">
+  <h1>🎶 Fase 4 — Swiftie Check</h1>
+  <p id="quizPergunta"></p>
+  <div id="quizBotoes"></div>
 </div>
 
-<!-- FASE 5 – BOTÃO QUE FOGE -->
-<div id="fase5" class="hidden">
-  <h1>😈 Fase 5</h1>
-  <p>Clique no botão certo</p>
-  <button id="fugir">Deixa eu pensar…</button>
-  <button onclick="final()">Óbvio que sim 💖</button>
+<!-- FASE 5 — BOTÃO -->
+<div id="fase5" class="card hidden">
+  <h1>😈 Fase 5 — Último obstáculo</h1>
+  <p>Antes do convite oficial, escolha seu destino.</p>
+  <button id="fugir">Vou fingir mistério</button>
+  <button onclick="final()">Revelar o convite 💌</button>
 </div>
 
 <!-- FINAL -->
-<div id="final" class="hidden">
-  <h1>📩 Convite Desbloqueado!</h1>
+<div id="final" class="card hidden">
+  <h1>💌 Convite Oficial</h1>
   <p>
-    Cinema caseiro confirmado 🎬<br><br>
-    🍿 Pipoca<br>
-    💖 Carinho ilimitado<br>
-    🛋️ Pode dormir aqui, se quiser
+    Cinema caseiro comigo 🎬<br><br>
+    🍿 Pipoca de verdade<br>
+    🛋️ Sofá aprovado<br>
+    💖 Muito carinho<br>
+    💤 Pode dormir aqui, se quiser
   </p>
-  <h2>This is a love story 💕</h2>
+  <button onclick="posSim()">SIM 💕</button>
+  <button onclick="posNao()">Agora não 😅</button>
+</div>
+
+<!-- POS-CONVITE -->
+<div id="posFinal" class="card hidden">
+  <h1>✨ Pós-créditos — Taylor’s Version ✨</h1>
+  <p>
+    E assim como em <em>Love Story</em>,<br>
+    isso não foi um final… foi só o começo 😌💖<br><br>
+    Você disse sim,<br>
+    o sofá agradece,<br>
+    a pipoca estoura de felicidade<br>
+    e eu já tô escolhendo o cobertor mais confortável.<br><br>
+    Spoiler do próximo episódio:<br>
+    risadas, filme pausado pra comentar cenas<br>
+    e muito carinho até pegar no sono 💤✨
+  </p>
+</div>
+
+<!-- POS-NAO -->
+<div id="posNao" class="card hidden">
+  <h1>💙 Tudo bem — Taylor aprova</h1>
+  <p>
+    Nem todo <em>Love Story</em> acontece no mesmo dia.<br><br>
+    Sem pressão, sem climão,<br>
+    só carinho, respeito e um<br>
+    <em>"maybe next time"</em> bem bonito ✨<br><br>
+    Quando você quiser,<br>
+    o sofá continua aqui<br>
+    e a pipoca também 😌🍿
+  </p>
 </div>
 
 <script>
-/* ===== VARIÁVEIS DE CONTROLE ===== */
 let pipocaCount = 0;
 let sofaCount = 0;
-let music;
 
-/* ===== CONTROLE DE FASES ===== */
+const perguntas = [
+  {
+    q: "Qual música toca quando o amor dá errado, mas com estilo?",
+    a: ["All Too Well", "Shake It Off", "ME!"],
+    c: 0
+  },
+  {
+    q: "Complete: ‘Darling, I’m a nightmare dressed like a ___’",
+    a: ["daydream", "revenge", "angel"],
+    c: 0
+  },
+  {
+    q: "Esse convite é mais vibe:",
+    a: ["Reputation", "Midnights", "Lover"],
+    c: 2
+  }
+];
+
+let quizAtual = 0;
+
 function next(atual, proxima) {
-  document.getElementById(atual).classList.add("hidden");
-  document.getElementById(proxima).classList.remove("hidden");
+  document.getElementById(atual).classList.add('hidden');
+  document.getElementById(proxima).classList.remove('hidden');
 }
 
-/* ===== MÚSICA ===== */
-function startMusic() {
-  if (!music) {
-    music = new Audio("love-story.mp3");
-    music.loop = true;
-    music.play();
-  }
-}
-
-/* ===== FASE PIPOCA ===== */
 function pipoca() {
-  pipocaCount += 25;
-  document.getElementById("pipoca").innerText = pipocaCount + "%";
-
-  if (pipocaCount >= 100) {
-    next("fase2", "fase3");
+  pipocaCount++;
+  const texto = document.getElementById('pipocaTexto');
+  if (pipocaCount < 5) texto.innerText = 'Ainda meio triste…';
+  else if (pipocaCount < 10) texto.innerText = 'Agora sim tá cheirando bem';
+  else {
+    texto.innerText = 'Pipoca PERFEITA 🍿✨';
+    setTimeout(() => next('fase2','fase3'), 800);
   }
 }
 
-/* ===== FASE SOFÁ ===== */
 function sofa() {
-  sofaCount++;
-  document.getElementById("sofa").innerText =
-    "Cliques: " + sofaCount + "/5";
-
-  if (sofaCount >= 5) {
-    next("fase3", "fase4");
-  }
+  sofaCount += 20;
+  document.getElementById('sofa').innerText = 'Nível de conforto: ' + sofaCount + '%';
+  if (sofaCount >= 100) setTimeout(() => next('fase3','fase4'), 600);
 }
 
-/* ===== QUIZ ===== */
-function quiz(certo) {
-  if (certo) {
-    next("fase4", "fase5");
+function carregarQuiz() {
+  const p = perguntas[quizAtual];
+  document.getElementById('quizPergunta').innerText = p.q;
+  const box = document.getElementById('quizBotoes');
+  box.innerHTML = '';
+  p.a.forEach((resp, i) => {
+    const b = document.createElement('button');
+    b.innerText = resp;
+    b.onclick = () => responderQuiz(i);
+    box.appendChild(b);
+  });
+}
+
+function responderQuiz(i) {
+  if (i === perguntas[quizAtual].c) {
+    quizAtual++;
+    if (quizAtual >= perguntas.length) next('fase4','fase5');
+    else carregarQuiz();
   } else {
-    alert("Taylor Swift não aprovou 😅");
+    alert('Resposta errada. Taylor está decepcionada 😔');
   }
 }
 
-/* ===== FINAL ===== */
 function final() {
-  next("fase5", "final");
+  next('fase5','final');
 }
 
-/* ===== BOTÃO QUE FOGE ===== */
-const fugirBtn = document.getElementById("fugir");
+function posSim() {
+  window.open('https://wa.me/5584994900845?text=Eu%20aceito%20o%20cinema%20caseiro%20🍿💖','_blank');
+  next('final','posFinal');
+}
 
-fugirBtn.addEventListener("mouseover", () => {
-  fugirBtn.style.left = Math.random() * 70 + "vw";
-  fugirBtn.style.top = Math.random() * 70 + "vh";
+function posNao() {
+  window.open('https://wa.me/5584994900845?text=Hoje%20n%C3%A3o%2C%20mas%20amei%20o%20convite%20💙','_blank');
+  next('final','posNao');
+}
+
+const fugirBtn = document.getElementById('fugir');
+fugirBtn.addEventListener('mouseover', () => {
+  fugirBtn.style.left = Math.random() * 70 + 'vw';
+  fugirBtn.style.top = Math.random() * 70 + 'vh';
 });
+
+carregarQuiz();
 </script>
 
 </body>
