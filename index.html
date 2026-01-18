@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cinema Caseiro — Taylor’s Version</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.game {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.hidden { display: none; }
+
+button {
+  margin: 8px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 25px;
+  background: #a6c1ee;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: #8fa9e6;
+}
+
+.meme {
+  font-size: 1.1em;
+  line-height: 1.5;
+}
+</style>
+</head>
+
+<body>
+<div class="game">
+
+<!-- MEME -->
+<div id="meme" class="hidden meme"></div>
+
+<!-- FASE 1 -->
+<div id="fase1">
+  <h1>Mini Game do Cinema 🎮</h1>
+  <p>Toda grande história começa com uma era.</p>
+  <button onclick="nextFase(fase2, meme1)">💗 Lover</button>
+  <button onclick="nextFase(fase2, meme1)">🌲 Folklore</button>
+  <button onclick="nextFase(fase2, meme1)">✨ 1989</button>
+</div>
+
+<!-- FASE 2 -->
+<div id="fase2" class="hidden">
+  <h1>Missão Pipoca 🍿</h1>
+  <p>Clique até a pipoca ficar emocionalmente pronta.</p>
+  <button onclick="pipoca()">Estourar pipoca</button>
+  <div id="pipocas" style="font-size:1.5em;"></div>
+</div>
+
+<!-- FASE 3 -->
+<div id="faseMood" class="hidden">
+  <h1>Preparação Emocional 🎶</h1>
+  <p>Ajustando o clima interno…</p>
+  <button onclick="mood()">Ajustar estado emocional</button>
+  <div id="moodText" style="font-size:1.4em; margin-top:10px;"></div>
+</div>
+
+<!-- FASE 4 -->
+<div id="faseSofa" class="hidden">
+  <h1>Missão Sofá 🛋️</h1>
+  <p>Arrume o sofá para o cinema.</p>
+  <button onclick="sofa()">Arrumar</button>
+  <div id="sofaItens" style="font-size:1.5em;"></div>
+</div>
+
+<!-- FASE 5 -->
+<div id="faseQuiz" class="hidden">
+  <h1>Quiz Swiftie 🎤</h1>
+  <p>Qual frase define essa noite?</p>
+  <button onclick="nextFase(final, memeFinal)">You belong with me</button>
+  <button onclick="nextFase(final, memeFinal)">It’s a love story</button>
+  <button onclick="nextFase(final, memeFinal)">I think he knows 😏</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="hidden">
+  <h1>🎬 Convite Desbloqueado!</h1>
+  <p>Cinema caseiro confirmado:</p>
+  <p>
+    🍿 Pipoca<br>
+    💖 Carinho ilimitado<br>
+    🛏️ Pode dormir aqui, se quiser
+  </p>
+  <p><em>“Can I ask you a question?”</em></p>
+  <button onclick="aceitou()">💖 Óbvio que sim</button>
+  <button id="fugir">🤔 Deixa eu pensar…</button>
+</div>
+
+</div>
+
+<script>
+let pipocaCount = 0;
+let moodCount = 0;
+let sofaCount = 0;
+
+const moods = [
+  "😐 ok, é só um filme",
+  "🙂 isso vai ser legal",
+  "😍 this is a love story",
+  "💖 Taylor aprovaria"
+];
+
+const meme1 = `
+ninguém:<br>
+absolutamente ninguém:<br><br>
+<strong>eu:</strong> “vou fazer um mini-jogo romântico”
+`;
+
+const meme2 = `
+pensamento aleatório:<br><br>
+“pipoca é só milho…<br>
+mas com a pessoa certa vira evento”
+`;
+
+const meme3 = `
+Taylor Swift, provavelmente:<br><br>
+“sim, isso é um date de respeito”
+`;
+
+const memeFinal = `
+parabéns 🎉<br><br>
+você chegou até aqui.<br>
+isso já diz muita coisa.
+`;
+
+function showMeme(text, next) {
+  const meme = document.getElementById("meme");
+  meme.innerHTML = text;
+  meme.classList.remove("hidden");
+
+  setTimeout(() => {
+    meme.classList.add("hidden");
+    next();
+  }, 2000);
+}
+
+function nextFase(fase, memeText) {
+  document.querySelectorAll(".game > div").forEach(d => d.classList.add("hidden"));
+  showMeme(memeText, fase);
+}
+
+function fase2() {
+  document.getElementById("fase2").classList.remove("hidden");
+}
+
+function pipoca() {
+  pipocaCount++;
+  document.getElementById("pipocas").innerHTML += "🍿";
+  if (pipocaCount >= 5) {
+    nextFase(() => document.getElementById("faseMood").classList.remove("hidden"), meme2);
+  }
+}
+
+function mood() {
+  document.getElementById("moodText").innerText = moods[moodCount];
+  moodCount++;
+  if (moodCount >= moods.length) {
+    nextFase(() => document.getElementById("faseSofa").classList.remove("hidden"), meme3);
+  }
+}
+
+function sofa() {
+  sofaCount++;
+  document.getElementById("sofaItens").innerHTML += "🛋️";
+  if (sofaCount >= 3) {
+    document.getElementById("sofaItens").innerHTML += "<br>🛏️ cobertinha liberada";
+    setTimeout(() => {
+      document.getElementById("faseSofa").classList.add("hidden");
+      document.getElementById("faseQuiz").classList.remove("hidden");
+    }, 1000);
+  }
+}
+
+const fugir = document.getElementById("fugir");
+if (fugir) {
+  fugir.addEventListener("mouseover", fugirBotao);
+  fugir.addEventListener("click", fugirBotao);
+}
+
+function fugirBotao() {
+  const btn = document.getElementById("fugir");
+  btn.style.position = "absolute";
+  btn.style.left = Math.random() * 250 + "px";
+  btn.style.top = Math.random() * 300 + "px";
+}
+
+function aceitou() {
+  document.getElementById("final").innerHTML = `
+    <h1>💖 Date confirmado</h1>
+    <p><strong>(Taylor’s Version)</strong></p>
+    <p>
+      “This love is worth the wait”<br>
+      inclusive a pipoca 🍿
+    </p>
+    <p>
+      Se quiser ficar, fica.<br>
+      Se quiser dormir aqui, já tem lugar 🛏️
+    </p>
+    <p>
+      💫 Final feliz desbloqueado.
+    </p>
+  `;
+}
+</script>
+
+</body>
+</html>
